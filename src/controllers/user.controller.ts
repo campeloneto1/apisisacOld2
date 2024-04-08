@@ -11,25 +11,22 @@ async function find(req:Request, res:Response) {
     if(Number.isNaN(Number(id))){
         res.status(400).send("O parâmetro informado não é um número.")
     }else{
-        const response = await UserServices.find(Number(id));
+        const response = await UserServices.find(req);
         res.status(200).send(response)
     }
 }
 
-async function create(req:Request, res:Response) {
-    const token = req.headers['x-access-token'];
-    const body = req.body;
-    const response = await UserServices.create(body);
+async function create(req:Request, res:Response) {  
+    const response = await UserServices.create(req);
     res.status(200).send(response);
 }
 
 async function update(req:Request, res:Response) {
     const {id}  = req.params;
-    const body = req.body;
     if(Number.isNaN(Number(id))){
         res.status(400).send("O parâmetro informado não é um número.")
     }else{
-        const response = await UserServices.update(Number(id), body);
+        const response = await UserServices.update(req);
         res.status(200).send(response)
     }
 }
@@ -39,7 +36,7 @@ async function destroy(req:Request, res:Response) {
     if(Number.isNaN(Number(id))){
         res.status(400).send("O parâmetro informado não é um número.")
     }else{
-        const response = await UserServices.destroy(Number(id));
+        const response = await UserServices.destroy(req);
         res.status(200).send(response)
     }
 }

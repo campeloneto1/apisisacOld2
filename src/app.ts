@@ -17,7 +17,7 @@ app.use(helmet());
 app.use(cors());
 app.use(morgan('tiny'));
 app.use(express.json());
-app.use(RateLimitMiddleware.limiter);
+app.use(RateLimitMiddleware.globalLimiter);
 
 app.use('/auth', RateLimitMiddleware.authLimiter, authRoute);
 app.use('/users', AuthMiddleware, userRoute);

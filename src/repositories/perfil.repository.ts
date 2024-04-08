@@ -13,21 +13,20 @@ async function find(id: number){
     return response;
 }
 
-async function create(data:any){
-    var user = new Perfil();
-    user = {...data};
-    const response = await perfilRepository.save(user).then((response:any) => {
+async function create(data:any, userId:any){
+    var perfil = perfilRepository.create({...data, createdBy: userId})  
+    const response =  await perfilRepository.save(perfil).then((response:any) => {
         return response;
     }).catch(({code, errno, sqlMessage}) => {
         return {code, errno, sqlMessage};
-    })
+    });
     return response;
 }
 
-async function update(id: number, data:any){
+async function update(id: number, data:any, userId:any){
     var response = await perfilRepository.findOneBy({id: id});
     if(response){
-        const response =  await perfilRepository.update({id:id},{...data}).then((response:any) => {
+        const response =  await perfilRepository.update({id:id},{...data, updatedBy: userId}).then((response:any) => {
             return response;
         }).catch(({code, errno, sqlMessage}) => {
             return {code, errno, sqlMessage};
@@ -39,7 +38,7 @@ async function update(id: number, data:any){
     }
 }
 
-async function destroy(id: number){
+async function destroy(id: number, userId:any){
     const response = await perfilRepository.findOneBy({id: id});
     if(response){
         var response2 = await perfilRepository.remove(response);

@@ -1,37 +1,33 @@
 
 import { AppDataSource } from "../connection";
 import User from "../models/user.model";
-import Jwt from '../utilities/jwt'
 
 const userRepository = AppDataSource.getRepository(User)
 
 async function index()  {
-    const response = await userRepository.find({relations: ['perfil']});
+    const response = await userRepository.find({relations: ['perfil', 'createdBy']});
     return response;
 }
 
 async function find(id: number){
-    const response = await userRepository.findOne({where: {id: id}, relations: ['perfil']});
+    const response = await userRepository.findOne({where: {id: id}, relations: ['perfil', 'createdBy']});
     return response;
 }
 
-async function create(data:any){
-    var user = userRepository.create({...data, createdeBy:1})    
-    //const response = await userRepository.save(user).then().catch()
-    //return response;
+async function create(data:any, userId:any){
+    var user = userRepository.create({...data, createdBy: userId})    
    const response =  await userRepository.save(user).then((response:any) => {
         return response;
     }).catch(({code, errno, sqlMessage}) => {
         return {code, errno, sqlMessage};
     });
-
     return response;
 }
 
-async function update(id: number, data:any){
+async function update(id: number, data:any, userId:any){
     var response = await userRepository.findOneBy({id: id});
     if(response){
-        const response =  await userRepository.update({id:id},{...data}).then((response:any) => {
+        const response =  await userRepository.update({id:id},{...data, updatedBy: userId}).then((response:any) => {
             return response;
         }).catch(({code, errno, sqlMessage}) => {
             return {code, errno, sqlMessage};
@@ -43,7 +39,7 @@ async function update(id: number, data:any){
     }
 }
 
-async function destroy(id: number){
+async function destroy(id: number, userId:any){
     const response = await userRepository.findOneBy({id: id});
     if(response){
         var response2 = await userRepository.remove(response);

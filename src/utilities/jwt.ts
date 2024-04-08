@@ -18,10 +18,9 @@ async function verify(token:any){
 }
 
 async function returnId(token:any){
-    const response = verify(token);
-
+    const response = await verify(token);
     //@ts-ignore
-    return response.id;
+    return response.data.id;
 }
 
 export default {

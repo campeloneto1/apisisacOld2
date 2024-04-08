@@ -3,9 +3,10 @@ import {
   Column,
   PrimaryGeneratedColumn,
   ManyToOne,
-  OneToOne,
-  JoinColumn,
   BeforeInsert,
+  CreateDateColumn,
+  UpdateDateColumn,
+  DeleteDateColumn,
 } from "typeorm";
 import Bcrypt from '../utilities/bcrypt';
 import GenerateSalt from "../utilities/generate-salt";
@@ -58,15 +59,20 @@ export default class User {
   salt!: string;
 
   @ManyToOne(() => Perfil, (perfil) => perfil.users)
-  perfil!: Perfil
+  perfil!: User
 
-  @OneToOne(() => User)
-    @JoinColumn()
-    createdeBy!: User
+  @ManyToOne(() => User, (user) => user.id)
+  createdBy!: User
 
-    @OneToOne(() => User)
-    @JoinColumn()
-    updatedBy!: User
+  @ManyToOne(() => User, (user) => user.id)
+  updatedBy!: User
+
+    @CreateDateColumn()
+    created_at!: Date;
+    @UpdateDateColumn()
+    updated_at!: Date;
+    @DeleteDateColumn()
+    deleted_at!: Date;
 
   @BeforeInsert()
   async hashPassword() {

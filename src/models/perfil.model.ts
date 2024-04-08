@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany, JoinTable, OneToOne, JoinColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToOne, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from 'typeorm';
 import User from './user.model';
 
 @Entity("perfis")
@@ -22,13 +22,18 @@ export default class Perfil{
     })
     gestor!: boolean;
 
-    @OneToOne(() => User)
-    @JoinColumn()
-    createdeBy!: User;
+    @ManyToOne(() => User, (user) => user.id)
+  createdBy!: User
 
-    @OneToOne(() => User)
-    @JoinColumn()
-    updatedBy!: User;
+  @ManyToOne(() => User, (user) => user.id)
+  updatedBy!: User
+
+    @CreateDateColumn()
+    created_at!: Date;
+    @UpdateDateColumn()
+    updated_at!: Date;
+    @DeleteDateColumn()
+    deleted_at!: Date;
 
     @OneToMany(() => User, (user) => user.perfil) // note: we will create author property in the Photo class below
     users!: User[]
