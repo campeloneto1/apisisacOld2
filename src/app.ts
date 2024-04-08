@@ -5,7 +5,7 @@ import morgan from 'morgan';
 
 import AuthMiddleware from './middlewares/auth.middleware';
 
-import RateLimit from './utilities/rate-limit';
+import RateLimitMiddleware from './middlewares/rate-limite.middleware';
 
 import authRoute from './routes/auth.route';
 import userRoute from './routes/user.route';
@@ -17,9 +17,9 @@ app.use(helmet());
 app.use(cors());
 app.use(morgan('tiny'));
 app.use(express.json());
-app.use(RateLimit);
+app.use(RateLimitMiddleware.limiter);
 
-app.use('/auth', authRoute);
+app.use('/auth', RateLimitMiddleware.authLimiter, authRoute);
 app.use('/users', AuthMiddleware, userRoute);
 app.use('/perfis', AuthMiddleware, perfilRoute);
 

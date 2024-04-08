@@ -22,23 +22,23 @@ async function create(req:Request, res:Response) {
     res.status(200).send(response)
 }
 
-function update(req:Request, res:Response) {
+async function update(req:Request, res:Response) {
     const {id}  = req.params;
     const body = req.body;
     if(Number.isNaN(Number(id))){
         res.status(400).send("O parâmetro informado não é um número.")
     }else{
-        const response = PerfilServices.update(Number(id), body);
+        const response = await PerfilServices.update(Number(id), body);
         res.status(200).send(response)
     }
 }
 
-function destroy(req:Request, res:Response) {
+async function destroy(req:Request, res:Response) {
     const {id}  = req.params;
     if(Number.isNaN(Number(id))){
         res.status(400).send("O parâmetro informado não é um número.")
     }else{
-        const response = PerfilServices.destroy(Number(id));
+        const response = await PerfilServices.destroy(Number(id));
         res.status(200).send(response)
     }
 }

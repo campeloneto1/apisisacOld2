@@ -17,14 +17,27 @@ async function find(id: number){
 
 async function create(data:any){
     var user = userRepository.create({...data, createdeBy:1})    
-    const response = await userRepository.save(user)
+    //const response = await userRepository.save(user).then().catch()
+    //return response;
+   const response =  await userRepository.save(user).then((response:any) => {
+        return response;
+    }).catch(({code, errno, sqlMessage}) => {
+        return {code, errno, sqlMessage};
+    });
+
     return response;
 }
 
 async function update(id: number, data:any){
     var response = await userRepository.findOneBy({id: id});
     if(response){
-        return await userRepository.update({id:id},{...data});
+        const response =  await userRepository.update({id:id},{...data}).then((response:any) => {
+            return response;
+        }).catch(({code, errno, sqlMessage}) => {
+            return {code, errno, sqlMessage};
+        });
+
+        return response;
     }else{
         return false; 
     }
