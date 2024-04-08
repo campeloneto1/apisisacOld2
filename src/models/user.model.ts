@@ -43,6 +43,7 @@ export default class User {
   @Column({
     length: 100,
     nullable: false,
+    select: false
   })
   password!: string;
 
@@ -50,6 +51,7 @@ export default class User {
     length: 100,
     unique: true,
     nullable: false,
+    select: false
   })
   salt!: string;
 

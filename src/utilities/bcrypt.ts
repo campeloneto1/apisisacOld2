@@ -10,7 +10,7 @@ async function hashString (pass:string) {
 }
 
 async function compareString(text:string, hash:string) {
-    var response!: boolean;
+    var response: boolean = false;
     await bcrypt.compare(text, hash).then(function(result) {
         response = result;
     });
