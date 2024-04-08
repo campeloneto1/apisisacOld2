@@ -17,6 +17,7 @@ async function find(req:Request, res:Response) {
 }
 
 async function create(req:Request, res:Response) {
+    const token = req.headers['x-access-token'];
     const body = req.body;
     const response = await UserServices.create(body);
     res.status(200).send(response)

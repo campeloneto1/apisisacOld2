@@ -17,7 +17,15 @@ async function verify(token:any){
    return decoded;
 }
 
+async function returnId(token:any){
+    const response = verify(token);
+
+    //@ts-ignore
+    return response.id;
+}
+
 export default {
     singIn,
-    verify
+    verify,
+    returnId
 }

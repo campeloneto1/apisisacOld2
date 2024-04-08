@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, JoinTable, OneToOne, JoinColumn } from 'typeorm';
 import User from './user.model';
 
 @Entity("perfis")
@@ -15,12 +15,20 @@ export default class Perfil{
     @Column({
         nullable: true
     })
-    administrador!: boolean
+    administrador!: boolean;
 
     @Column({
         nullable: true
     })
-    gestor!: boolean
+    gestor!: boolean;
+
+    @OneToOne(() => User)
+    @JoinColumn()
+    createdeBy!: User;
+
+    @OneToOne(() => User)
+    @JoinColumn()
+    updatedBy!: User;
 
     @OneToMany(() => User, (user) => user.perfil) // note: we will create author property in the Photo class below
     users!: User[]

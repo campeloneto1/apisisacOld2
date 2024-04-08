@@ -1,6 +1,7 @@
 
 import { AppDataSource } from "../connection";
 import User from "../models/user.model";
+import Jwt from '../utilities/jwt'
 
 const userRepository = AppDataSource.getRepository(User)
 
@@ -15,7 +16,7 @@ async function find(id: number){
 }
 
 async function create(data:any){
-    var user = userRepository.create({...data})    
+    var user = userRepository.create({...data, createdeBy:1})    
     const response = await userRepository.save(user)
     return response;
 }

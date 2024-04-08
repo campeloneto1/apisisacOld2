@@ -3,6 +3,8 @@ import {
   Column,
   PrimaryGeneratedColumn,
   ManyToOne,
+  OneToOne,
+  JoinColumn,
   BeforeInsert,
 } from "typeorm";
 import Bcrypt from '../utilities/bcrypt';
@@ -57,6 +59,14 @@ export default class User {
 
   @ManyToOne(() => Perfil, (perfil) => perfil.users)
   perfil!: Perfil
+
+  @OneToOne(() => User)
+    @JoinColumn()
+    createdeBy!: User
+
+    @OneToOne(() => User)
+    @JoinColumn()
+    updatedBy!: User
 
   @BeforeInsert()
   async hashPassword() {

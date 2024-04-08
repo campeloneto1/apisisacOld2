@@ -13,7 +13,13 @@ const json = {
 async function login(data:any) {
     const user = await userRepository.findOne({
         where: {cpf: data.cpf}, 
-        
+        select: {
+            id: true,
+            nome: true,
+            cpf: true,
+            password: true,
+            salt:true,
+        },
         relations: ['perfil']
     });
 
@@ -40,7 +46,6 @@ async function signInJwt(user:any){
     if(response){
         json.token = response;
         json.user = user;
-        console.log(json);
         return json;
     }
 }
