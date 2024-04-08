@@ -62,10 +62,13 @@ export default class User {
   perfil!: User
 
   @ManyToOne(() => User, (user) => user.id)
-  createdBy!: User
+  created_by!: User
 
   @ManyToOne(() => User, (user) => user.id)
-  updatedBy!: User
+  updated_by!: User
+
+  @ManyToOne(() => User, (user) => user.id)
+  deleted_by!: User
 
     @CreateDateColumn()
     created_at!: Date;

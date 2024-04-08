@@ -5,12 +5,12 @@ import User from "../models/user.model";
 const userRepository = AppDataSource.getRepository(User)
 
 async function index()  {
-    const response = await userRepository.find({relations: ['perfil', 'createdBy']});
+    const response = await userRepository.find({relations: ['perfil', 'created_by', 'updated_by']});
     return response;
 }
 
 async function find(id: number){
-    const response = await userRepository.findOne({where: {id: id}, relations: ['perfil', 'createdBy']});
+    const response = await userRepository.findOne({where: {id: id}, relations: ['perfil', 'created_by', 'updated_by', 'deleted_by']});
     return response;
 }
 

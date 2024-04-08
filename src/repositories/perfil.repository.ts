@@ -4,12 +4,12 @@ import Perfil from "../models/perfil.model";
 const perfilRepository = AppDataSource.getRepository(Perfil)
 
 async function index()  {
-    const response = await perfilRepository.find();
+    const response = await perfilRepository.find({ relations: ['created_by', 'updated_by']});
     return response;
 }
 
 async function find(id: number){
-    const response = await perfilRepository.findOneBy({id: id});
+    const response = await perfilRepository.findOne({where: {id: id}, relations: ['created_by', 'updated_by']});
     return response;
 }
 

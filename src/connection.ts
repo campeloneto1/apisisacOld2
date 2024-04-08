@@ -5,6 +5,14 @@ dotenv.config();
 
 import User from './models/user.model';
 import Perfil from './models/perfil.model';
+import Cidade from './models/cidade.model';
+import Estado from './models/estado.model';
+import Pais from './models/pais.model';
+import Unidade from './models/unidade.model';
+import Subunidade from './models/subunidade.model';
+import Setor from './models/setor.model';
+import Graduacao from './models/graduacao.model';
+import Policial from './models/policial.model';
 
 const TORM_HOST = process.env.TORM_HOST;
 const TORM_PORT = process.env.TORM_PORT;
@@ -21,7 +29,7 @@ export const AppDataSource = new DataSource({
     database: TORM_DB,
     synchronize: true,
     logging: true,
-    entities: [User, Perfil],
+    entities: [User, Perfil, Cidade, Estado, Pais, Unidade, Subunidade, Setor, Graduacao, Policial],
     subscribers: [],
     migrations: [],
 });

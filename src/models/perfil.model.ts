@@ -23,10 +23,13 @@ export default class Perfil{
     gestor!: boolean;
 
     @ManyToOne(() => User, (user) => user.id)
-  createdBy!: User
+    created_by!: User
 
-  @ManyToOne(() => User, (user) => user.id)
-  updatedBy!: User
+    @ManyToOne(() => User, (user) => user.id)
+    updated_by!: User
+
+    @ManyToOne(() => User, (user) => user.id)
+  deleted_by!: User
 
     @CreateDateColumn()
     created_at!: Date;
