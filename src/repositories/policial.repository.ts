@@ -1,22 +1,21 @@
-
 import { AppDataSource } from "../connection";
-import User from "../models/user.model";
+import Policial from "../models/policial.model";
 
-const modelRepository = AppDataSource.getRepository(User)
+const modelRepository = AppDataSource.getRepository(Policial)
 
 async function index()  {
-    const response = await modelRepository.find({relations: ['perfil', 'created_by', 'updated_by']});
+    const response = await modelRepository.find({ relations: ['created_by', 'updated_by']});
     return response;
 }
 
 async function find(id: number){
-    const response = await modelRepository.findOne({where: {id: id}, relations: ['perfil', 'created_by', 'updated_by', 'deleted_by']});
+    const response = await modelRepository.findOne({where: {id: id}, relations: ['created_by', 'updated_by']});
     return response;
 }
 
 async function create(data:any, userId:any){
-    var object = modelRepository.create({...data, createdBy: userId})    
-   const response =  await modelRepository.save(object).then((response:any) => {
+    var object = modelRepository.create({...data, createdBy: userId})  
+    const response =  await modelRepository.save(object).then((response:any) => {
         return response;
     }).catch(({code, errno, sqlMessage}) => {
         return {code, errno, sqlMessage};
@@ -47,7 +46,6 @@ async function destroy(id: number, userId:any){
     }else{
         return false; 
     }
-    
 }
 
 export default {

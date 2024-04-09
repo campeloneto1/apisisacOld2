@@ -1,21 +1,21 @@
 import { AppDataSource } from "../connection";
 import Perfil from "../models/perfil.model";
 
-const perfilRepository = AppDataSource.getRepository(Perfil)
+const modelRepository = AppDataSource.getRepository(Perfil)
 
 async function index()  {
-    const response = await perfilRepository.find({ relations: ['created_by', 'updated_by']});
+    const response = await modelRepository.find({ relations: ['created_by', 'updated_by']});
     return response;
 }
 
 async function find(id: number){
-    const response = await perfilRepository.findOne({where: {id: id}, relations: ['created_by', 'updated_by']});
+    const response = await modelRepository.findOne({where: {id: id}, relations: ['created_by', 'updated_by']});
     return response;
 }
 
 async function create(data:any, userId:any){
-    var perfil = perfilRepository.create({...data, createdBy: userId})  
-    const response =  await perfilRepository.save(perfil).then((response:any) => {
+    var object = modelRepository.create({...data, createdBy: userId})  
+    const response =  await modelRepository.save(object).then((response:any) => {
         return response;
     }).catch(({code, errno, sqlMessage}) => {
         return {code, errno, sqlMessage};
@@ -24,9 +24,9 @@ async function create(data:any, userId:any){
 }
 
 async function update(id: number, data:any, userId:any){
-    var response = await perfilRepository.findOneBy({id: id});
+    var response = await modelRepository.findOneBy({id: id});
     if(response){
-        const response =  await perfilRepository.update({id:id},{...data, updatedBy: userId}).then((response:any) => {
+        const response =  await modelRepository.update({id:id},{...data, updatedBy: userId}).then((response:any) => {
             return response;
         }).catch(({code, errno, sqlMessage}) => {
             return {code, errno, sqlMessage};
@@ -39,9 +39,9 @@ async function update(id: number, data:any, userId:any){
 }
 
 async function destroy(id: number, userId:any){
-    const response = await perfilRepository.findOneBy({id: id});
+    const response = await modelRepository.findOneBy({id: id});
     if(response){
-        var response2 = await perfilRepository.remove(response);
+        var response2 = await modelRepository.remove(response);
         return response2;
     }else{
         return false; 

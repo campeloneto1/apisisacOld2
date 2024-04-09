@@ -7,6 +7,8 @@ const JWT_SECRET = process.env.JWT_SECRET;
 
 export default function VerifyToken(req:Request, res:Response, next:NextFunction){
     const token = req.headers['x-access-token'];
+    const nonSecurePaths = ['/auth'];
+    if (nonSecurePaths.includes(req.baseUrl)) return next();
     if(token){
         //@ts-ignore
         jwt.verify(token, JWT_SECRET, function(err, decoded) {

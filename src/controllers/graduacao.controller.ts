@@ -1,8 +1,8 @@
 import {Request, Response} from 'express';
-import PerfilService from '../services/perfil.service';
+import GraduacaoService from '../services/graduacao.service';
 
 async function index(_req:Request, res:Response) {
-    const response = await PerfilService.index();
+    const response = await GraduacaoService.index();
     res.status(200).send(response)
 }
 
@@ -11,14 +11,14 @@ async function find(req:Request, res:Response) {
     if(Number.isNaN(Number(id))){
         res.status(400).send("O parâmetro informado não é um número.")
     }else{
-        const response = await PerfilService.find(req);
+        const response = await GraduacaoService.find(req);
         res.status(200).send(response)
     }
 }
 
-async function create(req:Request, res:Response) {
-    const response = await PerfilService.create(req);
-    res.status(200).send(response)
+async function create(req:Request, res:Response) {  
+    const response = await GraduacaoService.create(req);
+    res.status(200).send(response);
 }
 
 async function update(req:Request, res:Response) {
@@ -26,7 +26,7 @@ async function update(req:Request, res:Response) {
     if(Number.isNaN(Number(id))){
         res.status(400).send("O parâmetro informado não é um número.")
     }else{
-        const response = await PerfilService.update(req);
+        const response = await GraduacaoService.update(req);
         res.status(200).send(response)
     }
 }
@@ -36,7 +36,7 @@ async function destroy(req:Request, res:Response) {
     if(Number.isNaN(Number(id))){
         res.status(400).send("O parâmetro informado não é um número.")
     }else{
-        const response = await PerfilService.destroy(req);
+        const response = await GraduacaoService.destroy(req);
         res.status(200).send(response)
     }
 }
